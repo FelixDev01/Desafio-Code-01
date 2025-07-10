@@ -1,7 +1,9 @@
 package com.desafio.itau_unibanco.controller;
 
+import com.desafio.itau_unibanco.Estatistica;
 import com.desafio.itau_unibanco.Transacao;
 import com.desafio.itau_unibanco.service.TransacaoService;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,10 +41,11 @@ public class TransacoesController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    /*@GetMapping
-    public ResponseEntity listarTransacoes(){
-
-    }*/
+    @GetMapping("/estatistica")
+    public ResponseEntity<Estatistica> listarEstatisticas(){
+    Estatistica estatistica = transacaoService.calcularEstatisticasDosUltimos60Segundos();
+    return ResponseEntity.ok(estatistica);
+    }
 
     @DeleteMapping
     public ResponseEntity deletarRegistros(){
